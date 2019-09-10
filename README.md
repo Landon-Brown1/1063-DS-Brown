@@ -1,6 +1,6 @@
 
 # Image:
-![the image was not loaded correctly][my_face.jpg]
+![the image was not loaded correctly](my_face.jpg)
 
 # Name:
 Landon Brown 
