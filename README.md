@@ -1,6 +1,6 @@
 
 # Image:
-![the image was not loaded correctly](my_face.jpg)
+![the image was not loaded correctly](C:\Users\Landon Brown\Desktop\Git Repositories\1063-DS-Brown"my face")
 
 # Name:
 Landon Brown 
