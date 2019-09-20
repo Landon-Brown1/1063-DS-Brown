@@ -305,7 +305,7 @@ int main(){
 
     //  test substringSearch function
         string input;
-        int size = 30;
+        int size = 5;
         string array[size];
         for(int i = 0; i < size; i++){
             array[i] = "";
