@@ -153,6 +153,8 @@ double calcStdDev(int A[], int size){
 }
 
 
+
+
 //  (7)
 //************************************************************
 // description: creates and initializes an array of integers *
