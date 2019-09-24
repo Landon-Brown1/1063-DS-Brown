@@ -152,9 +152,6 @@ double calcStdDev(int A[], int size){
     return avg;
 }
 
-
-
-
 //  (7)
 //************************************************************
 // description: creates and initializes an array of integers *
