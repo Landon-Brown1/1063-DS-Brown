@@ -160,7 +160,7 @@ double calcStdDev(int A[], int size){
 //                                                           *
 //************************************************************
 int* initIntArray(int size){
-    int *Array = new int(size);
+    int *Array = new int[size];
     for(int i = 0; i < size; i++){
         Array[i] = 0;
     }
