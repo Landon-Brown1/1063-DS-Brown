@@ -224,7 +224,7 @@ public:
         Employee* Temp = Head;
         int count = 0;
 
-        //  just for email
+        //  just for email because that is what the assignment asked
         while(Temp != NULL){
             // if(Temp->emp_id.find(input) != string::npos){
             //     A[count] = Temp->emp_id;
