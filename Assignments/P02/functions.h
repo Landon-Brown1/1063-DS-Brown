@@ -4,7 +4,7 @@
 *   array if the number of elements gets too large or too small.
 *DUE DATE: 10/8/2019
 *DATE CREATED: 10/1/2019
-*DATE LAST MODIFIED: 10/1/2019
+*DATE LAST MODIFIED: 10/8/2019
  */
 
 /**
