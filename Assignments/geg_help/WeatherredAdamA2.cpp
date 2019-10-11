@@ -40,6 +40,8 @@ int main(){
     Outfile << "Student #3 Age: 20" << endl;
     Outfile << "Student #3 Mnumber: M333333" << endl;
 
+    Outfile << "================================" << endl;
+
     Outfile << "The names were saved to a file." << endl;
     Outfile << "WE ARE DONE WRITING TO A FILE" << endl;
    
@@ -51,7 +53,7 @@ int main(){
    while(Infile >> Name >> SSN >> Age >> Mnumber){
     Outfile << left << setw(16) << Name 
             << setw(16) << SSN 
-            << setw(8) << Age 
+            << setw(12) << Age 
             << setw(8) << Mnumber
             << endl;
    }
@@ -59,12 +61,12 @@ int main(){
     Infile.close();
 
     Outfile << "=======================================" << endl;
-    Outfile << " WE ARE DONE READING THE FILE" << endl;
+    Outfile << "WE ARE DONE READING THE FILE" << endl;
     Outfile << "Check what you have on screen" << endl;
     Outfile << "=======================================" << endl;
     Outfile << "Press any key to continue . . . ";
     
     Outfile.close();
-    system("pause");
-    return (0);
+    // system("pause");
+    return 0;
 }

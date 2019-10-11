@@ -14,15 +14,16 @@ Student #3 Name: Colmenares
 Student #3 SSN: 192837465
 Student #3 Age: 20
 Student #3 Mnumber: M333333
+================================
 The names were saved to a file.
 WE ARE DONE WRITING TO A FILE
 =======================================
 NOW IT IS TIME TO READ DATA FROM A FILE.
-Eduardo         123456789       40      M111111 
-Andres          987654321       30      M222222 
-Colmenares      192837465       20      M333333 
+Eduardo         123456789       40          M111111 
+Andres          987654321       30          M222222 
+Colmenares      192837465       20          M333333 
 =======================================
- WE ARE DONE READING THE FILE
+WE ARE DONE READING THE FILE
 Check what you have on screen
 =======================================
 Press any key to continue . . . 
