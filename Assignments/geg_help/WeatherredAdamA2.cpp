@@ -1,3 +1,11 @@
+// AUTHOR: Adam Weatherred
+// ASSIGNMENT TITLE: Programming Homework 1
+// ASSIGNMENT DESCRIPTION: This program uses the input and output 
+//    file streams to print to an output file in a specific format.
+// DUE DATE: 10/11/2019
+// DATE CREATED: 10/8/2019
+// DATE LAST MODIFIED: 10/10/2019
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
