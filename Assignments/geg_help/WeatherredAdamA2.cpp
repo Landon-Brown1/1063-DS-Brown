@@ -67,6 +67,5 @@ int main(){
     Outfile << "Press any key to continue . . . ";
     
     Outfile.close();
-    // system("pause");
     return 0;
 }
