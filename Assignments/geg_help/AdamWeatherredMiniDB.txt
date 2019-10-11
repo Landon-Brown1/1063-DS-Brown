@@ -1,0 +1,28 @@
+Enter the names of three students.
+================================
+Student #1 Name: Eduardo
+Student #1 SSN: 123456789
+Student #1 Age: 40
+Student #1 Mnumber: M111111
+================================
+Student #2 Name: Andres
+Student #2 SSN: 987654321
+Student #2 Age: 30
+Student #2 Mnumber: M222222
+================================
+Student #3 Name: Colmenares
+Student #3 SSN: 192837465
+Student #3 Age: 20
+Student #3 Mnumber: M333333
+The names were saved to a file.
+WE ARE DONE WRITING TO A FILE
+=======================================
+NOW IT IS TIME TO READ DATA FROM A FILE.
+Eduardo         123456789       40      M111111 
+Andres          987654321       30      M222222 
+Colmenares      192837465       20      M333333 
+=======================================
+ WE ARE DONE READING THE FILE
+Check what you have on screen
+=======================================
+Press any key to continue . . . 

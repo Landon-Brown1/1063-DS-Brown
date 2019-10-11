@@ -18,7 +18,7 @@ int main(){
 
     Outfile.open("AdamWeatherredMiniDB.txt");
 
-    Outfile << "Enter the names of three students" << endl;
+    Outfile << "Enter the names of three students." << endl;
     Outfile << "================================" << endl;
    
     Outfile << "Student #1 Name: Eduardo" << endl; 
