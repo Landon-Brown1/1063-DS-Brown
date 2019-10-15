@@ -1,0 +1,11 @@
+
+gorilla:2000:0.5 -> honeybadger:25:0.99 -> bear:1500:0.3 -> chicken:3:0.03 -> clowns:185:0.89
+Item: gorilla:2000:0.5
+Item: honeybadger:25:0.99
+Item: bear:1500:0.3
+Item: chicken:3:0.03
+Item: clowns:185:0.89
+Empty queue!
+
+Front = 0
+Rear = 0

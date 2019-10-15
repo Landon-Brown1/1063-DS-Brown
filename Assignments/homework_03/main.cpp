@@ -15,8 +15,10 @@
 using namespace std;
 
 int main(){
-    ifstream inFile("animals.txt");      // input file of animal info    
-    ofstream outFile("output_file.dat"); // output results of main functions               
+    ifstream inFile;                     // input file of animal info    
+    inFile.open("animals.txt");
+    ofstream outFile;                    // output results of main functions               
+    outFile.open("output_file.dat");
     Animal *a;                           // animal pointer used to hold popped animals
     ListStack s;                         // List based stack object
 
@@ -25,6 +27,7 @@ int main(){
         Animal *b = new Animal(a->name, a->weight, a->scary);    // allocate memory for an animal
         s.Push(b);
     }
+    inFile.close();
 
     outFile << "INITIAL LIST:" << endl;
     s.Print(outFile);          // Print the stack
@@ -43,6 +46,7 @@ int main(){
 
     outFile << "ENDING LIST:" << endl;
     s.Print(outFile);           // print the stack
+    outFile.close();
 
     return 0;
 }
