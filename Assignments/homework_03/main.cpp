@@ -15,30 +15,30 @@
 using namespace std;
 
 int main(){
-    ifstream inFile("animals.txt");     // input file of animal info    
-    ofstream outFile("output_file.dat");// output results of main functions               
-    Animal *a;                          // animal pointer used to hold popped animals
-    ListStack s;                        // List based stack object
+    ifstream inFile("animals.txt");      // input file of animal info    
+    ofstream outFile("output_file.dat"); // output results of main functions               
+    Animal *a;                           // animal pointer used to hold popped animals
+    ListStack s;                         // List based stack object
 
     while (!inFile.eof()) {
-        a = new Animal();                         // allocate memory for an animal
+        a = new Animal();                            // allocate memory for an animal
         inFile >> a->name >> a->weight >> a->scary;  // load animal with file data
-        s.Push(a);                               // push animal onto the stack
+        s.Push(a);                                   // push animal onto the stack
     }
 
-     s.Print(outFile);             // Print the stack
+     s.Print(outFile);          // Print the stack
 
-    outFile << endl;           // ummm
+    outFile << endl;            // ummm
 
-    a = s.Pop();           // get animal off top of stack
+    a = s.Pop();                // get animal off top of stack
     
-    outFile << a << endl;      // print animal (cout operator overloaded)
+    outFile << a << endl;       // print animal (cout operator overloaded)
 
-    a = s.Pop();           // get animal off top of stack again
+    a = s.Pop();                // get animal off top of stack again
     
-    outFile << a << endl;      // print animal (cout operator overloaded)
+    outFile << a << endl;       // print animal (cout operator overloaded)
 
-    s.Print(outFile);             // print the stack
+    s.Print(outFile);           // print the stack
 
     return 0;
 }

@@ -36,8 +36,9 @@ private:
     Node *Top;
 
 public:
-    ListStack();                    // constructor
-    void Push(Animal *);            // stack gets Animals
-    Animal *Pop();                  // Pop returns top animal
-    ostream& Print(ostream&);       // print stack for debugging
+    ListStack();                    
+
+    void Push(Animal *);          
+    Animal *Pop();                 
+    ostream& Print(ostream&);       
 };
