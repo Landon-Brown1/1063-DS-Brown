@@ -51,12 +51,12 @@ ListStack::ListStack(){
 // precondition: valid animal object is given                *
 // postcondition: animal is added to the stack               *
 //************************************************************
-void ListStack::Push(Animal *a){
+void ListStack::Push(Animal *f){
     if(Top == NULL){
-        Top = new Node(a);
+        Top = new Node(f);
     }
     else{
-        Node* Temp = new Node(a);
+        Node* Temp = new Node(f);
         Temp->Next = Top;
         Top = Temp;
     }
@@ -70,14 +70,14 @@ void ListStack::Push(Animal *a){
 //************************************************************  
 Animal* ListStack::Pop(){
     if(Top == NULL){
-        Node* Temp = Top;
-        Animal *a = Top->A;
-        Top = Top->Next;
-        delete Temp;
-        return a;
+        return NULL;
     }
     else{
-        return NULL;
+        Node* Temp = Top;
+        Animal *f = Top->A;
+        Top = Top->Next;
+        delete Temp;
+        return f;
     }
 }
 

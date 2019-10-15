@@ -21,23 +21,27 @@ int main(){
     ListStack s;                         // List based stack object
 
     while (!inFile.eof()) {
-        a = new Animal();                            // allocate memory for an animal
-        inFile >> a->name >> a->weight >> a->scary;  // load animal with file data
-        s.Push(a);                                   // push animal onto the stack
+        inFile >> a->name >> a->weight >> a->scary;              // load animal with file data
+        Animal *b = new Animal(a->name, a->weight, a->scary);    // allocate memory for an animal
+        s.Push(b);
     }
 
-     s.Print(outFile);          // Print the stack
+    outFile << "INITIAL LIST:" << endl;
+    s.Print(outFile);          // Print the stack
 
     outFile << endl;            // ummm
 
     a = s.Pop();                // get animal off top of stack
     
-    outFile << a << endl;       // print animal (cout operator overloaded)
+    outFile << "Pop -> " << a << endl;       // print animal (cout operator overloaded)
 
     a = s.Pop();                // get animal off top of stack again
     
-    outFile << a << endl;       // print animal (cout operator overloaded)
+    outFile << "Pop -> " << a << endl;       // print animal (cout operator overloaded)
 
+    outFile << endl;            // ummm
+
+    outFile << "ENDING LIST:" << endl;
     s.Print(outFile);           // print the stack
 
     return 0;

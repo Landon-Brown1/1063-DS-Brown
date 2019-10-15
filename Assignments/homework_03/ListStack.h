@@ -28,7 +28,7 @@ struct Node {
     Node *Next;
 
     Node();
-    Node(Animal *a);
+    Node(Animal *);
 };
 
 class ListStack {
