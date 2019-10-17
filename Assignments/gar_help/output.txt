@@ -1,0 +1,29 @@
+Landon Brown
+
+Name         Start Time    Length        Charge
+-----------------------------------------------
+Mary              05:45        10      $   1.20
+Joe               16:41        40      $  22.00
+James             23:10        38      $  13.30
+Joshua            45:90         2         ERROR
+David             12:42        50      $  27.50
+Caroline          23:00       121      $  42.35
+Jeffrey           19:00        82      $  28.70
+Joy               24:00        13         ERROR
+Liam              06:59         8      $   0.96
+Corban            07:00        29      $  15.95
+Henry             19:01        59      $  20.65
+Cadence           23:08       134      $  46.90
+Titus             10:60        65      $  35.75
+Julio             05:37       100      $  12.00
+Rebekah           12:03        81      $  44.55
+Andy              23:59         5      $   1.75
+TalkMonkey        22:00       300      $ 105.00
+Cindy             12:89       103      $  56.65
+Maxy              25:50        12         ERROR
+David             12:42        90      $  49.50
+Julie             06:05        14      $   1.68
+McBoatFace        00:00        30      $   3.60
+Randall           06:59        71      $   8.52
+NoraB             19:01        15      $   5.25
+Trumpy            24:00        37         ERROR
