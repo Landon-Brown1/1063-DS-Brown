@@ -7,7 +7,6 @@
 *DATE LAST MODIFIED: 11/07/2019
  */
 
-
 #include <iostream>
 #include <string>
 #include <fstream> 
@@ -225,9 +224,12 @@ int main() {
   W.Add("Quokka");
   W.Add("Egret");
 
+  cout << endl;
   W.Print();
   cout << endl;
   W.ReOrder();
   W.Print();
+  cout << endl;
 
+  return 0;
 }
