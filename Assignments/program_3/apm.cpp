@@ -16,7 +16,7 @@ using namespace std;
                 /*objects*/
 ///////////////////////////////////////////////
 struct Node{
-    char data;
+    int data;
     Node* next;
     Node* prev;
     //base constructor
@@ -26,7 +26,7 @@ struct Node{
         prev = NULL;
     }
     //loaded constructor
-    Node(char d){
+    Node(int d){
         data = d;
         next = NULL;
         prev = NULL;
@@ -75,12 +75,12 @@ class List{
                 }
                 this->head = NULL;
                 List F(other);
-                swap(F.head, this->head);
+                this->head = other.head;
             }
             return *this;
         }
         //pushes (for the sake of variety)
-        void GiveFront(char x){
+        void GiveFront(int x){
             if(!head){
                 // cout << "A";
                 head = new Node(x);
@@ -94,7 +94,7 @@ class List{
                 head = temp;
             }
         }
-        void GiveBack(char x){
+        void GiveBack(int x){
             if(!head){
                 head = new Node(x);
                 tail = head;
@@ -108,7 +108,7 @@ class List{
             }
         }
         //pops (for the sake of variety)
-        char TakeFront(){
+        int TakeFront(){
             char RetVal = 0;
             if(head){
                 RetVal = head->data;
@@ -119,7 +119,7 @@ class List{
             }
             return RetVal;
         }
-        char TakeBack(){
+        int TakeBack(){
             char RetVal = 0;
             if(head){
                 RetVal = tail->data;
@@ -134,9 +134,7 @@ class List{
         //print stuff
         ostream& Print(ostream& out){
             Node* temp = head;
-            // cout << "P";
             while(temp != NULL){
-                // cout << "P";
                 out << temp->data;
                 temp = temp->next;
             }
@@ -155,28 +153,88 @@ class List{
             return out;
         }
 
-        //operations
-        // List Add(List b){
-        //     List res;
-        //     bool carry = false;
-        //     while(this->head != NULL || b.head != NULL){
-        //         if(carry == true){
-        //             res.GiveBack((this->TakeBack() + b.TakeBack() + 1));
-        //         }else{
-        //             res.GiveBack((this->TakeBack() + b.TakeBack()));
-        //         }
-        //         carry = false;
-        //         if(res.tail->data >= 10){
-        //             res.tail -= 10;
-        //             carry = true;
-        //         }
-        //     }
-        //     return res;
-        // }
-        // List Subtract(List b){
-        //     List res;
-        //     return res;
-        // }
+        // operations
+        List Add(List b){
+            List res;
+            Node* L1t = tail;
+            Node* L2t = b.tail;
+            bool carry = false;
+            int data1 = L1t->data;
+            int data2 = L2t->data;
+
+            while(L1t != NULL){
+                if(carry == true){
+                    res.GiveFront((data1 + data2 + 1));
+                }else{
+                    res.GiveFront((data1 + data2));
+                }
+                carry = false;
+                if(res.head->data >= 10){
+                    res.head->data -= 10;
+                    carry = true;
+                }
+
+                if(L1t->prev != NULL){
+                    L1t = L1t->prev;
+                    data1 = L1t->data;
+                }else if(!L1t && L2t){
+                    data1 = 0;
+                }else{
+                    L1t = L1t->prev;
+                }
+                if(L2t->prev != NULL){
+                    L2t = L2t->prev;
+                    data2 = L2t->data;
+                }else if(!L2t && L1t){
+                    data2 = 0;
+                }else{
+                    L2t = L2t->prev;
+                }
+            }
+            
+            return res;
+        }
+
+        List Subtract(List b){
+            List res;
+            Node* L1t = tail;
+            Node* L2t = b.tail;
+            bool carry = false;
+            int data1 = L1t->data;
+            int data2 = L2t->data;
+
+            while(L1t != NULL){
+                if(carry == true){
+                    res.GiveFront((data1 - data2 - 1));
+                }else{
+                    res.GiveFront((data1 - data2));
+                }
+                carry = false;
+                if(res.head->data <= 0){
+                    res.head->data += 10;
+                    carry = true;
+                }
+
+                if(L1t->prev != NULL){
+                    L1t = L1t->prev;
+                    data1 = L1t->data;
+                }else if(!L1t && L2t){
+                    data1 = 0;
+                }else{
+                    L1t = L1t->prev;
+                }
+                if(L2t->prev != NULL){
+                    L2t = L2t->prev;
+                    data2 = L2t->data;
+                }else if(!L2t && L1t){
+                    data2 = 0;
+                }else{
+                    L2t = L2t->prev;
+                }
+            }
+            res.Print(cout);
+            return res;
+        }
         // List Multiply(List b){
         //     List res;
         //     return res;
@@ -202,27 +260,33 @@ int main(){
     for(int i = 0; i < problems; i++){
         inFile >> operation >> n1 >> n2;
         for(int f = 0; f < n1.size(); f++){
-            A.GiveBack(n1[f]);
+            int hemp = n1[f]-48;
+            A.GiveBack(hemp);
         }
         for(int f = 0; f < n2.size(); f++){
-            B.GiveBack(n2[f]);
+            int hemp = n2[f]-48;
+            B.GiveBack(hemp);
         }
+        
         outFile << "Operation " << (i+1) << ": ";
-        // switch(operation){
-        //     case '+':   outFile << "Addition";
-        //                 Result = A.Add(B);
-        //                 break;
-        //     case '-':   outFile << "Subtraction"; 
-        //                 Result = A.Subtract(B);
-        //                 break;
-        //     case '*':   outFile << "Multiplication";
-        //                 Result = A.Multiply(B);
-        //                 break;
-        //     default:    break;
-        // }
-        outFile << endl << "Answer:" << endl << endl;
-        Result.Print(outFile);
-        outFile << endl;
+        switch(operation){
+            case '+':   outFile << "Addition" << endl;
+                        outFile << "Answer:" << endl << endl;
+                        (A.Add(B)).Print(outFile);
+                        outFile << endl;
+                        break;
+            case '-':   outFile << "Subtraction" << endl;
+                        outFile << "Answer:" << endl << endl;
+                        (A.Subtract(B)).Print(outFile);
+                        outFile << endl;
+                        break;
+            // case '*':   outFile << "Multiplication";
+            //             outFile << "Answer:" << endl << endl;
+            //             Result = A.Multiply(B);
+            //             outFile << endl;
+            //             break;
+            default:    break;
+        }
     }
 
     inFile.close();
