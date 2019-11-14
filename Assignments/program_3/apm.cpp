@@ -15,6 +15,7 @@
 using namespace std;
                 /*objects*/
 ///////////////////////////////////////////////
+//Node Object
 struct Node{
     int data;
     Node* next;
@@ -33,6 +34,7 @@ struct Node{
     }
 }; 
 
+//List Object
 class List{
     private:
         Node* head;
@@ -74,12 +76,19 @@ class List{
                     current = temp;
                 }
                 this->head = NULL;
-                List F(other);
+                //copy constructor and set new head
                 this->head = other.head;
             }
             return *this;
         }
+
         //pushes (for the sake of variety)
+        //************************************************************
+        // description: push a Node to the front of the list         *
+        // return: none                                              *
+        // precondition: a list exists                               *
+        // postcondition: the list has one more node at the front    *
+        //************************************************************
         void GiveFront(int x){
             if(!head){
                 // cout << "A";
@@ -94,6 +103,13 @@ class List{
                 head = temp;
             }
         }
+
+        //************************************************************
+        // description: push a Node to the back of the list          *
+        // return: none                                              *
+        // precondition: a list exists                               *
+        // postcondition: the list has one more node at the back     *
+        //************************************************************
         void GiveBack(int x){
             if(!head){
                 head = new Node(x);
@@ -107,7 +123,14 @@ class List{
                 tail = temp;
             }
         }
+
         //pops (for the sake of variety)
+        //************************************************************
+        // description: pop a Node from the front of the list        *
+        // return: none                                              *
+        // precondition: a list exists and is not empty              *
+        // postcondition: the list has one less node at the front    *
+        //************************************************************
         int TakeFront(){
             char RetVal = 0;
             if(head){
@@ -119,6 +142,13 @@ class List{
             }
             return RetVal;
         }
+
+        //************************************************************
+        // description: pop a Node from the back of the list         *
+        // return: none                                              *
+        // precondition: a list exists and is not empty              *
+        // postcondition: the list has one less node at the back     *
+        //************************************************************
         int TakeBack(){
             char RetVal = 0;
             if(head){
@@ -132,6 +162,12 @@ class List{
         }
 
         //print stuff
+        //************************************************************
+        // description: print the contents of a list                 *
+        // return: ostream&                                          *
+        // precondition: a list exists and is not empty              *
+        // postcondition: the list is printed to an ostream          *
+        //************************************************************
         ostream& Print(ostream& out){
             Node* temp = head;
             while(temp != NULL){
@@ -142,6 +178,12 @@ class List{
             return out;
         }
         //(for shits and giggles)
+        //************************************************************
+        // description: print the contents of a list, backwards      *
+        // return: ostream&                                          *
+        // precondition: a list exists and is not empty              *
+        // postcondition: list is printed to an ostream in reverse   *
+        //************************************************************
         ostream& PrintReverse(ostream& out){
             Node* temp = tail;
             while(temp){
@@ -154,30 +196,34 @@ class List{
         }
 
         // operations
+        //************************************************************
+        // description: add the contents of 2 lists                  *
+        // return: List                                              *
+        // precondition: 2 lists exist and are not empty             *
+        // postcondition: the lists are added and returned as one    *
+        //************************************************************
         List Add(List b){
             List res;
             Node* L1t = tail;
             Node* L2t = b.tail;
-            bool carry = false;
+            int carry = 0;
             int data1 = L1t->data;
             int data2 = L2t->data;
 
-            while(L1t != NULL){
-                if(carry == true){
-                    res.GiveFront((data1 + data2 + 1));
-                }else{
-                    res.GiveFront((data1 + data2));
-                }
-                carry = false;
+            while(L1t != NULL || L2t != NULL){
+                res.GiveFront((data1 + data2 + carry));
+                
+                carry = 0;
                 if(res.head->data >= 10){
                     res.head->data -= 10;
-                    carry = true;
+                    carry = 1;
                 }
 
                 if(L1t->prev != NULL){
                     L1t = L1t->prev;
                     data1 = L1t->data;
                 }else if(!L1t && L2t){
+                    
                     data1 = 0;
                 }else{
                     L1t = L1t->prev;
@@ -195,46 +241,59 @@ class List{
             return res;
         }
 
-        List Subtract(List b){
-            List res;
-            Node* L1t = tail;
-            Node* L2t = b.tail;
-            bool carry = false;
-            int data1 = L1t->data;
-            int data2 = L2t->data;
+        //************************************************************
+        // description: subtract the contents of 2 lists             *
+        // return: List                                              *
+        // precondition: 2 lists exist and are not empty             *
+        // postcondition: list2 subbed from list1 and returned as one*
+        //************************************************************
+        //  List Subtract(List b){
+        //     List res;
+        //     Node* L1t = tail;
+        //     Node* L2t = b.tail;
+        //     bool carry = false;
+        //     int data1 = L1t->data;
+        //     int data2 = L2t->data;
 
-            while(L1t != NULL){
-                if(carry == true){
-                    res.GiveFront((data1 - data2 - 1));
-                }else{
-                    res.GiveFront((data1 - data2));
-                }
-                carry = false;
-                if(res.head->data <= 0){
-                    res.head->data += 10;
-                    carry = true;
-                }
+        //     while(L1t != NULL || L2t != NULL){
+        //         if(carry == true){
+        //             res.GiveFront((data1 - data2 - 1));
+        //         }else{
+        //             res.GiveFront((data1 - data2));
+        //         }
+        //         carry = false;
+        //         if(res.head->data <= 0){
+        //             res.head->data += 10;
+        //             carry = true;
+        //         }
 
-                if(L1t->prev != NULL){
-                    L1t = L1t->prev;
-                    data1 = L1t->data;
-                }else if(!L1t && L2t){
-                    data1 = 0;
-                }else{
-                    L1t = L1t->prev;
-                }
-                if(L2t->prev != NULL){
-                    L2t = L2t->prev;
-                    data2 = L2t->data;
-                }else if(!L2t && L1t){
-                    data2 = 0;
-                }else{
-                    L2t = L2t->prev;
-                }
-            }
-            res.Print(cout);
-            return res;
-        }
+        //         if(L1t->prev != NULL){
+        //             L1t = L1t->prev;
+        //             data1 = L1t->data;
+        //         }else if(!L1t && L2t){
+        //             data1 = 0;
+        //         }else{
+        //             L1t = L1t->prev;
+        //         }
+        //         if(L2t->prev != NULL){
+        //             L2t = L2t->prev;
+        //             data2 = L2t->data;
+        //         }else if(!L2t && L1t){
+        //             data2 = 0;
+        //         }else{
+        //             L2t = L2t->prev;
+        //         }
+        //     }
+        //     res.Print(cout);
+        //     return res;
+        // }
+
+        //************************************************************
+        // description: multiply the contents of 2 lists and         *
+        // return: List                                              *
+        // precondition: 2 lists exist and are not empty             *
+        // postcondition: lists are multiplied and returned as one   *
+        //************************************************************
         // List Multiply(List b){
         //     List res;
         //     return res;
@@ -254,7 +313,7 @@ int main(){
     char operation = ' ';
     int problems = 99; //(っ▀¯▀)つ a bitch ain't one
     string n1 = "",n2 = "";
-    List A,B,Result;
+    List A,B,Empty;
 
     inFile >> problems;
     for(int i = 0; i < problems; i++){
@@ -267,6 +326,10 @@ int main(){
             int hemp = n2[f]-48;
             B.GiveBack(hemp);
         }
+        cout << operation << endl;
+        A.Print(cout);
+        B.Print(cout);
+        cout << endl;
         
         outFile << "Operation " << (i+1) << ": ";
         switch(operation){
@@ -274,11 +337,15 @@ int main(){
                         outFile << "Answer:" << endl << endl;
                         (A.Add(B)).Print(outFile);
                         outFile << endl;
+                        A = Empty;
+                        B = Empty;
                         break;
             case '-':   outFile << "Subtraction" << endl;
                         outFile << "Answer:" << endl << endl;
-                        (A.Subtract(B)).Print(outFile);
+                        (A.Add(B)).Print(outFile);
                         outFile << endl;
+                        A = Empty;
+                        B = Empty;
                         break;
             // case '*':   outFile << "Multiplication";
             //             outFile << "Answer:" << endl << endl;
