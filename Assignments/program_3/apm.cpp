@@ -60,6 +60,7 @@ public:
             delete head;
             head = temp;
         }
+        tail = NULL;
     }
     //copy constructor, I purposefully don't
     //  use any functions in my constructors
@@ -97,10 +98,9 @@ public:
         Node* current = other.head;   // set ptr to first link
         while(current != NULL)       // until ptr points beyond last link
         {
-            GiveFront(current->data); // print data
+            GiveBack(current->data); // print data
             current = current->next; // move to next link
         }
-        this->head = current;
         return *this;
     }
 
@@ -115,13 +115,13 @@ public:
     {
         if (!head)
         {
-            // cout << "A";
+            //  cout << "Adding to empty list";
             head = new Node(x);
             tail = head;
         }
         else
         {
-            // cout << "F";
+            //  cout << "Adding to Non-empty list";
             Node *temp = new Node(x);
             temp->next = head;
             head->prev = temp;
@@ -163,7 +163,7 @@ public:
     //************************************************************
     int TakeFront()
     {
-        char RetVal = 0;
+        int RetVal = 0;
         if (head)
         {
             RetVal = head->data;
@@ -187,7 +187,7 @@ public:
     //************************************************************
     int TakeBack()
     {
-        char RetVal = 0;
+        int RetVal = 0;
         if (head)
         {
             RetVal = tail->data;
@@ -214,6 +214,10 @@ public:
     ostream &Print(ostream &out)
     {
         Node *temp = head;
+        if(temp == NULL){
+            out << "EMPTY LIST" << endl;
+            return out;
+        }
         while (temp != NULL)
         {
             out << temp->data;
@@ -251,19 +255,21 @@ public:
     //************************************************************
     List Add(List b)
     {
-        List newList;
+        List newAdd;
 
-        while (this->size > 0 || b.size > 0)
-            newList.GiveFront(TakeBack() + b.TakeBack());
-
-        Node *temp = newList.tail;
+        while (this->size > 0 || b.size > 0){
+             newAdd.GiveFront(TakeBack() + b.TakeBack());
+            // cout << this->size << " " << b.size << endl;
+        }
+           
+        Node *temp = newAdd.tail;
         while (temp)
         {
             if (temp->data >= 10)
             {
                 if (temp->prev == NULL)
                 {
-                    newList.GiveFront((temp->data / 10));
+                    newAdd.GiveFront((temp->data / 10));
                     temp->data = temp->data % 10;
                     temp = temp->prev;
                 }
@@ -278,7 +284,7 @@ public:
                 temp = temp->prev;
             }
         }
-        return newList;
+        return newAdd;
     }
 
     //************************************************************
@@ -289,19 +295,19 @@ public:
     //************************************************************
      List Subtract(List b)
     {
-        List newList;
+        List newSub;
 
         while (this->size > 0 || b.size > 0)
-            newList.GiveFront(TakeBack() - b.TakeBack());
+            newSub.GiveFront(TakeBack() - b.TakeBack());
 
-        Node *temp = newList.tail;
+        Node *temp = newSub.tail;
         while (temp)
         {
             if (temp->data < 0)
             {
                 if (temp->prev == NULL)
                 {
-                    newList.GiveFront(0);
+                    newSub.GiveFront(0);
                     temp = temp->prev;
                 }
                 else
@@ -315,7 +321,7 @@ public:
                 temp = temp->prev;
             }
         }
-        return newList;
+        return newSub;
     }
 
     //************************************************************
@@ -326,7 +332,6 @@ public:
     //************************************************************
     List Multiply(List b){
         List newList;
-
         for(int i = 0; i < b.size; i++){
             List tempList;
             cout << "Made tempList" << endl;
@@ -335,17 +340,21 @@ public:
             while (L1){
                 cout << "push to front of tempList..." << endl;
                 tempList.GiveFront(L1->data * b.tail->data);
-                tempList.Print(cout);
                 cout << "traverse list 1" << endl;
                 L1 = L1->prev;
             }
             for(int f = 0; f < i; f++){
                 cout << "adding a 0 to the end of tempList" << endl;
                 tempList.GiveBack(0);
-            }
+            } 
+            
+            tempList.Print(cout);
+
             cout << "adding tempList to newList" << endl;
             List oof = newList.Add(tempList);       //system didnt like me using the function
+            oof.Print(cout);
             newList = oof;                          // to add them so i made another list
+            newList.Print(cout);
             cout << "remove the last node in b" << endl;
             b.TakeBack();
         }
