@@ -53,6 +53,14 @@ public:
         tail = NULL;
         size = 0;
     }
+    //destructor
+    ~List(){
+        while(head){
+            Node* temp = head->next;
+            delete head;
+            head = temp;
+        }
+    }
     //copy constructor, I purposefully don't
     //  use any functions in my constructors
     //  for my own sanity in debugging
@@ -79,24 +87,20 @@ public:
         }
     }
     //overloaded assignment operator
-    const List &operator=(List other)
+    const List& operator=(List& other)
     {
-        if (this != &other)
+        if (this == &other) // if both lists are the same dont change
+            return *this;
+
+        delete this;        //call destructor
+
+        Node* current = other.head;   // set ptr to first link
+        while(current != NULL)       // until ptr points beyond last link
         {
-            //delete old list
-            Node *current = this->head;
-            Node *temp;
-            while (current)
-            {
-                temp = current->next;
-                delete current;
-                current = temp;
-            }
-            this->head = NULL;
-            //copy constructor and set new head
-            this->head = other.head;
-            this->size = other.size;
+            GiveFront(current->data); // print data
+            current = current->next; // move to next link
         }
+        this->head = current;
         return *this;
     }
 
@@ -321,75 +325,33 @@ public:
     // postcondition: lists are multiplied and returned as one   *
     //************************************************************
     List Multiply(List b){
-        List nList;
-        List tempList;
+        List newList;
 
-        //need to rewrite: make it so that it reads a single integer
-        //  multiplication into a linked list, then adds it to a total list
-        while (b.size > 0){
-            //pointer to traverse first list
+        for(int i = 0; i < b.size; i++){
+            List tempList;
+            cout << "Made tempList" << endl;
             Node* L1 = this->tail;
-            //pointer to traverse second list
-            Node* L2 = b.tail;
-            //result for each individual digit
-            long int tempResult = 0;
-            //total for each loop
-            long long int total = 0;
-            //carry of each individual digit
-            long int carry = 0;
-            //number of runs in the inside loop
-            int numRuns = 0;
-            /*inner loop to multiply each number*/
-            while(L1){
-                // printf("Multiplying %d x %d\n", L1->data, L2->data);
-                tempResult = L1->data * L2->data;
-                // printf("TempResult is %d\n", tempResult);
-                tempResult += carry;
-                carry = 0;
-                if(L1->prev){
-                    carry += (tempResult / 10);
-                    // printf("TempResult is %d and TR mod 10 is %d\n", tempResult, (tempResult % 10));
-                    total += (tempResult % 10) * pow(10.0,numRuns);
-                    // printf("Carry is %d and remainder is %f\n", tempResult / 10,  (tempResult % 10) * pow(10.0,numRuns));
-                    // printf("%d mod 10 = %d and 10^%d = %f\n", tempResult, (tempResult % 10), numRuns, pow(10,numRuns));
-                }else{
-                    // printf("Carry is %d and remainder is %f\n", tempResult / 10,  (tempResult % 10) * pow(10.0,numRuns));
-                    total += ((tempResult * pow(10.0,numRuns)));
-                }
-                // cout << total << " " << tempResult << " " << carry << " " << endl;
-                numRuns++;
+            cout << "Made L1" << endl;
+            while (L1){
+                cout << "push to front of tempList..." << endl;
+                tempList.GiveFront(L1->data * b.tail->data);
+                tempList.Print(cout);
+                cout << "traverse list 1" << endl;
                 L1 = L1->prev;
             }
-            nList.GiveFront(total);
+            for(int f = 0; f < i; f++){
+                cout << "adding a 0 to the end of tempList" << endl;
+                tempList.GiveBack(0);
+            }
+            cout << "adding tempList to newList" << endl;
+            List oof = newList.Add(tempList);       //system didnt like me using the function
+            newList = oof;                          // to add them so i made another list
+            cout << "remove the last node in b" << endl;
             b.TakeBack();
         }
-
-        //this chuck traverses the new list, and moves digits over
-        //  due to carries as it goes. 
-        //  (ex from 12->34->1->58 to 1->5->4->6->8)
-        Node *temp = nList.tail;
-        while (temp)
-        {
-            if (temp->data >= 10)
-            {
-                if (temp->prev == NULL)
-                {
-                    nList.GiveFront((temp->data / 10));
-                    temp->data = temp->data % 10;
-                    temp = temp->prev;
-                }
-                else
-                {
-                    temp->prev->data += (temp->data / 10);
-                    temp->data = temp->data % 10;
-                    temp = temp->prev;
-                }
-            }
-            else{
-                temp = temp->prev;
-            }
-        }
-        return nList;
+        
+        cout << "return newList" << endl;
+        return newList;
     }
 };
 /*main*/
