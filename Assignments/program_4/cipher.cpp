@@ -16,17 +16,22 @@ using namespace std;
 
 class CaesarCipher{
 
-    string message;     //to hold the text
+private:
+    string encodedMessage;     //to hold encoded text
+    string decodedMessage;     //holds decoded text
     int shift;          //to hold the shift number
 
+public:
     //empty constructor
     CaesarCipher(){
-        message = "";
+        encodedMessage = "";
+        decodedMessage = "";
         shift = 0;
     }
     //loaded constructor
-    CaesarCipher(string m, int s){
-        message = m;
+    CaesarCipher(string em, string dm, int s){
+        encodedMessage = em;
+        decodedMessage = dm;
         shift = s;
     }
 
@@ -37,7 +42,14 @@ class CaesarCipher{
     // POSTCONDITION: data is encrypted at a certain shift value  *
     //*************************************************************
     void Encrypt(){
-        
+        int intVal;
+        for(int i = 0; i < decodedMessage.size(); i++){
+            encodedMessage = decodedMessage;
+            intVal = (int)encodedMessage[i] - 65;   // Turn it into an integer number between 0-25
+            intVal += shift % 26;                   // Shift the letter, using mod to wrap back around
+            encodedMessage[i] = intVal + 65;        // Turn integer back into an ascii upper case letter
+            
+        }
     }
     //*************************************************************
     // DESCRIPTION: decrypts a string given a specific shift value*
@@ -46,7 +58,13 @@ class CaesarCipher{
     // POSTCONDITION: data is decrypted at a certain shift value  *
     //*************************************************************
     void Decrypt(){
-
+        int intVal;
+        for(int i = 0; i < encodedMessage.size(); i++){
+            decodedMessage = encodedMessage;
+            intVal = (int)decodedMessage[i] - 65;   // Turn it into an integer number between 0-25
+            intVal -= shift % 26;                   // Shift the letter, using mod to wrap back around
+            decodedMessage[i] = intVal + 65;        // Turn integer back into ASCII upper letter
+        }
     }
     //************************************************************
     // DESCRIPTION: a method that uppercases a string            *
@@ -55,8 +73,15 @@ class CaesarCipher{
     // POSTCONDITION: returns that string, but uppercased        *
     //************************************************************
     string UpperCase(){
-
-        return "a";
+        int intVal;
+        for(int i = 0; i < decodedMessage.size(); i++){ //for whole string,
+            if(intVal >= 97 && intVal <= 122){          //if the value is a valid letter
+                intVal = (int)decodedMessage[i] - 65;   //change to int
+                intVal -= 32;                           //subtract correct ASCII value to upper
+                decodedMessage[i] = intVal + 65;        //convert back
+            }
+        }
+        return decodedMessage;
     }
     //************************************************************
     // DESCRIPTION: sets the shift amount for your class (def 13)*
@@ -75,9 +100,15 @@ class CaesarCipher{
     //************************************************************
     void ReadCipherText(string fileName){
         ifstream in;
-        in.open(fileName.c_str());
+        in.open(fileName.c_str());  //open file
 
-        in.close();
+        int sh = 0;
+        string mes = "";
+        in >> sh >> mes;            //read message and shift
+        SetShift(sh);
+        encodedMessage = mes;       //store them
+
+        in.close();                 //close file
     }
     //************************************************************
     // DESCRIPTION: writes encoded text to an output stream      *
@@ -85,25 +116,31 @@ class CaesarCipher{
     // PRECONDITION: file data and stream are valid              *
     // POSTCONDITION: string is printed to an output stream      *
     //************************************************************
-    ofstream& WriteCipherText(string fileName, ofstream& out){
-        ofstream outFile;
-        outFile.open(fileName.c_str());
+    ofstream& WriteCipherText(string fileName){
+        ofstream out;
+        out.open(fileName.c_str());
 
-        outFile.close();
+
+        out.close();
         return out;
     }
     //************************************************************
-    // DESCRIPTION: reads an plaintext file into a string        *
+    // DESCRIPTION: reads a plaintext file into a string         *
     // RETURN: void                                              *
     // PRECONDITION: file contains valid data                    *
     // POSTCONDITION: stores the data for manipulation           *
     //************************************************************
     void ReadPlainText(string fileName){
         ifstream in;
-        in.open(fileName.c_str());
+        in.open(fileName.c_str());  //open file
 
+        int sh = 0;
+        string mes = "";
+        in >> sh >> mes;            //read message and shift
+        SetShift(sh);
+        decodedMessage = mes;       //store them
 
-        in.close();
+        in.close();                 //close file
     }
     //************************************************************
     // DESCRIPTION: writes plaintext to an output stream         *
@@ -111,50 +148,67 @@ class CaesarCipher{
     // PRECONDITION: file data and stream are valid              *
     // POSTCONDITION: string is printed to an output stream      *
     //************************************************************
-    ofstream& WritePlainText(string fileName, ofstream& out){
-        ofstream outFile;
-        outFile.open(fileName.c_str());
+    ofstream& WritePlainText(string fileName){
+        ofstream out;
+        out.open(fileName.c_str());
 
-        outFile.close();
+        out << decodedMessage << endl << endl;
+
+        out.close();
         return out;
     }
 
 
-
+};
 ////////////////////////main//////////////////////////////
 
 int main(){
 
     ifstream inFile;
-    inFile.open("encrypted.txt");
+    ofstream outFile;
+    string I = "encrypted.txt";
+    string O = "decrypted.txt";
+    inFile.open(I.c_str());
+    outFile.open(O.c_str());
+    CaesarCipher A;
+
     int numReads = 0;
     char choice = ' ';
     bool Flag = false;
     inFile >> numReads;
 
-    for(int i = 0; i < numReads; i++){
-        while(!Flag){
-            cout << "1. Encrypt" << endl;
-            cout << "2. Decrypt" << endl;
-            cout << "Choice: ";
-            cin >> choice;
-            switch(choice){
-                case '1':
-                    //encrypt
-                    Flag = true;
-                    break;
-                case '2':
-                    //decrypt
-                    Flag = true;
-                    break;
-                default:
-                    cout << "Invalid entry, try again.";
-                    cout << endl << endl;
-                    break;
-            }
-        }
-        
+    outFile << "LANDON M BROWN" << endl;
+    outFile << "11/26/2019" << endl;
+    outFile << "program_4 output" << endl << endl;
+
+    for(int f = 0; f < numReads; f++){
+        A.ReadCipherText(I);
+        A.Decrypt();
+        A.WritePlainText(O);
     }
+
+    // for(int i = 0; i < numReads; i++){
+    //     while(!Flag){
+    //         cout << "1. Encrypt" << endl;
+    //         cout << "2. Decrypt" << endl;
+    //         cout << "Choice: ";
+    //         cin >> choice;
+    //         switch(choice){
+    //             case '1':
+    //                 //encrypt
+    //                 Flag = true;
+    //                 break;
+    //             case '2':
+    //                 //decrypt
+    //                 Flag = true;
+    //                 break;
+    //             default:
+    //                 cout << "Invalid entry, try again.";
+    //                 cout << endl << endl;
+    //                 break;
+    //         }
+    //     } 
+    // }
 
     inFile.close();
 
