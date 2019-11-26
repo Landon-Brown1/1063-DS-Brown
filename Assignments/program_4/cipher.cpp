@@ -43,8 +43,8 @@ public:
     //*************************************************************
     void Encrypt(){
         int intVal;
+        encodedMessage = decodedMessage;
         for(int i = 0; i < decodedMessage.size(); i++){
-            encodedMessage = decodedMessage;
             intVal = (int)encodedMessage[i] - 65;   // Turn it into an integer number between 0-25
             intVal += shift % 26;                   // Shift the letter, using mod to wrap back around
             encodedMessage[i] = intVal + 65;        // Turn integer back into an ascii upper case letter
@@ -59,11 +59,14 @@ public:
     //*************************************************************
     void Decrypt(){
         int intVal;
+        decodedMessage = encodedMessage;
         for(int i = 0; i < encodedMessage.size(); i++){
-            decodedMessage = encodedMessage;
-            intVal = (int)decodedMessage[i] - 65;   // Turn it into an integer number between 0-25
-            intVal -= shift % 26;                   // Shift the letter, using mod to wrap back around
-            decodedMessage[i] = intVal + 65;        // Turn integer back into ASCII upper letter
+            cout << decodedMessage << endl;
+            intVal = (int)decodedMessage[i];        // Turn it into an integer number between 0-25
+            if(intVal > 65 && intVal < 90){
+                intVal -= shift % 26;                   // Shift the letter, using mod to wrap back around
+                decodedMessage[i] = intVal;             // Turn integer back into ASCII upper letter
+            }
         }
     }
     //************************************************************
@@ -98,17 +101,17 @@ public:
     // PRECONDITION: file contains valid data                    *
     // POSTCONDITION: stores the data for manipulation           *
     //************************************************************
-    void ReadCipherText(string fileName){
-        ifstream in;
-        in.open(fileName.c_str());  //open file
-
+    void ReadCipherText(ifstream& in){
+        int string_size = 8;
         int sh = 0;
         string mes = "";
-        in >> sh >> mes;            //read message and shift
+        char temp = ' ';            //program is being weird for getline
+        in >> sh >> temp;           //read shift
+        
+        getline(in, mes);
         SetShift(sh);
-        encodedMessage = mes;       //store them
-
-        in.close();                 //close file
+        encodedMessage = temp;
+        encodedMessage += mes;      //store them
     }
     //************************************************************
     // DESCRIPTION: writes encoded text to an output stream      *
@@ -116,12 +119,8 @@ public:
     // PRECONDITION: file data and stream are valid              *
     // POSTCONDITION: string is printed to an output stream      *
     //************************************************************
-    ofstream& WriteCipherText(string fileName){
-        ofstream out;
-        out.open(fileName.c_str());
-
-
-        out.close();
+    ofstream& WriteCipherText(ofstream& out){
+        out << encodedMessage << endl << endl;
         return out;
     }
     //************************************************************
@@ -130,17 +129,12 @@ public:
     // PRECONDITION: file contains valid data                    *
     // POSTCONDITION: stores the data for manipulation           *
     //************************************************************
-    void ReadPlainText(string fileName){
-        ifstream in;
-        in.open(fileName.c_str());  //open file
-
+    void ReadPlainText(ifstream& in){
         int sh = 0;
         string mes = "";
         in >> sh >> mes;            //read message and shift
         SetShift(sh);
         decodedMessage = mes;       //store them
-
-        in.close();                 //close file
     }
     //************************************************************
     // DESCRIPTION: writes plaintext to an output stream         *
@@ -148,13 +142,8 @@ public:
     // PRECONDITION: file data and stream are valid              *
     // POSTCONDITION: string is printed to an output stream      *
     //************************************************************
-    ofstream& WritePlainText(string fileName){
-        ofstream out;
-        out.open(fileName.c_str());
-
+    ofstream& WritePlainText(ofstream& out){
         out << decodedMessage << endl << endl;
-
-        out.close();
         return out;
     }
 
@@ -166,10 +155,8 @@ int main(){
 
     ifstream inFile;
     ofstream outFile;
-    string I = "encrypted.txt";
-    string O = "decrypted.txt";
-    inFile.open(I.c_str());
-    outFile.open(O.c_str());
+    inFile.open("encrypted.txt");
+    outFile.open("decrypted.txt");
     CaesarCipher A;
 
     int numReads = 0;
@@ -181,10 +168,11 @@ int main(){
     outFile << "11/26/2019" << endl;
     outFile << "program_4 output" << endl << endl;
 
-    for(int f = 0; f < numReads; f++){
-        A.ReadCipherText(I);
+    for(int f = 0; f < 1; f++){
+        A.ReadCipherText(inFile);
+        
         A.Decrypt();
-        A.WritePlainText(O);
+        A.WritePlainText(outFile);
     }
 
     // for(int i = 0; i < numReads; i++){
@@ -211,6 +199,7 @@ int main(){
     // }
 
     inFile.close();
+    outFile.close();
 
     cout << "End Code" << endl;
     return 0;
