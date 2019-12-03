@@ -186,7 +186,7 @@ int main(){
         A.WritePlainText(outFile);
     }
 
-    //this chuck is the part for extra credit, should just have to
+    //this chunk is the part for extra credit, should just have to
     //      uncomment this block and comment the above block to work.
     // for(int i = 0; i < numReads; i++){
     //     while(!Flag){
@@ -221,6 +221,5 @@ int main(){
     inFile.close();
     outFile.close();
 
-    cout << "End Code" << endl;
     return 0;
 }
