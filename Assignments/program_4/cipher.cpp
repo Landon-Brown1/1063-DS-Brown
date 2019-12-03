@@ -48,7 +48,7 @@ public:
             intVal = (int)encodedMessage[i];        // Turn it into an integer number between 0-25
             if(intVal >= 65 && intVal <= 90){
                 intVal += shift;                    // Shift the value
-                if(intVal > 65){                    //if the value is too small to be a letter,
+                if(intVal > 90){                    //if the value is too small to be a letter,
                     intVal -= 26;                   //make it back into one
                 }
                 encodedMessage[i] = intVal;         // Turn integer back into ASCII upper letter
@@ -179,33 +179,44 @@ int main(){
     outFile << "11/26/2019" << endl;
     outFile << "program_4 output" << endl << endl;
 
+    //this is the basic requirement chunk for the program
     for(int i = 0; i < numReads; i++){
-        while(!Flag){
-            cout << "1. Encrypt" << endl;
-            cout << "2. Decrypt" << endl;
-            cout << "Choice: ";
-            cin >> choice;
-            switch(choice){
-                case '1':
-                    //encrypt
-                    A.UpperCase();
-                    A.Encrypt();
-                    A.WriteCipherText(outFile);
-                    Flag = true;
-                    break;
-                case '2':
-                    //decrypt
-                    A.Decrypt();
-                    A.WritePlainText(outFile);
-                    Flag = true;
-                    break;
-                default:
-                    cout << "Invalid entry, try again.";
-                    cout << endl << endl;
-                    break;
-            }
-        } 
+        A.ReadCipherText(inFile);
+        A.Decrypt();
+        A.WritePlainText(outFile);
     }
+
+    //this chuck is the part for extra credit, should just have to
+    //      uncomment this block and comment the above block to work.
+    // for(int i = 0; i < numReads; i++){
+    //     while(!Flag){
+    //         cout << "1. Encrypt" << endl;
+    //         cout << "2. Decrypt" << endl;
+    //         cout << "Choice: ";
+    //         cin >> choice;
+    //         switch(choice){
+    //             case '1':
+    //                 //encrypt
+    //                 A.ReadPlainText(inFile);
+    //                 A.UpperCase();
+    //                 A.Encrypt();
+    //                 A.WriteCipherText(outFile);
+    //                 Flag = true;
+    //                 break;
+    //             case '2':
+    //                 //decrypt
+    //                 A.ReadCipherText(inFile);
+    //                 A.Decrypt();
+    //                 A.WritePlainText(outFile);
+    //                 Flag = true;
+    //                 break;
+    //             default:
+    //                 cout << "Invalid entry, try again.";
+    //                 cout << endl << endl;
+    //                 break;
+    //         }
+    //     } 
+    // }
 
     inFile.close();
     outFile.close();
