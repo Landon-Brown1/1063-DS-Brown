@@ -19,13 +19,15 @@
 
     //going to try creating without namespace std
 
-using namespace TermPrint;
+namespace TP = TermPrint;
+namespace TG = TermGame;
+// namespace TE = TermError;
 
 int main(){
 
     srand(time(NULL));
 
-    print("PROGRAM CURRENTLY RUNS ALL THE WAY THROUGH", (rand() % 8), (rand() % 8), false);
+    TP::print("PROGRAM CURRENTLY RUNS ALL THE WAY THROUGH", (rand() % 8), (rand() % 8), false);
 
     return 0;
 }

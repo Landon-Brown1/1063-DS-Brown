@@ -13,6 +13,7 @@ private:
     std::string suit;
     char value;
     Card* next;
+    Card* prev;
 
 public:
     //empty constructor
@@ -20,6 +21,7 @@ public:
         suit = "spade";
         value = '2';
         next = NULL;
+        prev = NULL;
     }
 
     //loaded constructor
@@ -27,12 +29,15 @@ public:
         suit = s;
         value = c;
         next = NULL;
+        prev = NULL;
     }
 
     //copy constructor
     Card(const Card& c){
         suit = c.suit;
         value = c.value;
+        next = c.next;
+        prev = c.prev;
     }
 
     //overloaded assignment operator
@@ -40,6 +45,8 @@ public:
         if(this != &that){
             this->suit = that.suit;
             this->value = that.value;
+            this->next = that.next;
+            this->prev = that.prev;
         }
         return *this;
     }
@@ -52,6 +59,16 @@ public:
     //sets card->next
     void _setNext(Card* n){
         this->next = n;
+    }
+
+    //returns card->prev
+    Card* _getPrev(){
+        return this->prev;
+    }
+
+    //sets card->prev
+    void _setPrev(Card* p){
+        this->prev = p;
     }
 
     //returns card->suit

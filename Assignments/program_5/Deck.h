@@ -10,49 +10,44 @@
 
 class Deck{
 private:
-    int size;
-    int capacity;
-    Card* data;
+    Card* top;
+
 public:
     //empty constructor
     Deck(){
-        size = 0;
-        capacity = 52;
-        data = new Card[capacity];
+        
     }
 
     //destructor
     ~Deck(){
-        delete [] this->data;
+        
     }
     //loaded constructor
     Deck(int s, Card* d, int c = 52){
-        size = s;
-        capacity = c;
-        data = d;
+        
     }
 
     //copy constructor
     Deck(const Deck& that){
-        this->size = that.size;
-        this->capacity = that.capacity;
-        this->data = new Card[this->capacity];
-        for(int i = 0; i < this->size; i++){
-            this->data[i] = that.data[i];
-        }
+        
     }
 
     //overloaded assignment operator
     Deck& operator= (const Deck& that){
-        if(this != &that){
-            this->size = that.size;
-            this->capacity = that.capacity;
-            delete [] this->data;
-            this->data = new Card[this->capacity];
-            for(int i = 0; i < this->size; i++){
-                this->data[i] = that.data[i];
-            }
-            return *this;
+        
+    }
+
+    //remove a card from the top of the stack and return it
+    Card Draw(){
+        if(!top){
+            std::cout << "Empty Deck" << std::endl;
+        }
+        else{
+            Card* temp = top;
+            Card c(*top);
+            top = top->_getNext();
+            delete temp;
+            return c;
         }
     }
 };
