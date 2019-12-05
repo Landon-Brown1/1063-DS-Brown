@@ -17,14 +17,15 @@
 #include "Player.h"
 #include "Opponent.h"
 
-    //going to try creating without std namespace
+    //going to try creating without namespace std
 
 using namespace TermPrint;
 
 int main(){
 
+    srand(time(NULL));
 
-    print("PROGRAM CURRENTLY RUNS ALL THE WAY THROUGH", RED,GREEN);
+    print("PROGRAM CURRENTLY RUNS ALL THE WAY THROUGH", (rand() % 8), (rand() % 8), false);
 
     return 0;
 }
