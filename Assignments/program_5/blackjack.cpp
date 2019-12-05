@@ -14,16 +14,17 @@
 //string is in card.h
 
 #include "TermGame.h"
-#include "Card.h"
-#include "Deck.h"
 #include "Player.h"
 #include "Opponent.h"
 
     //going to try creating without std namespace
 
+using namespace TermPrint;
+
 int main(){
 
 
+    print("PROGRAM CURRENTLY RUNS ALL THE WAY THROUGH", RED,GREEN);
 
     return 0;
 }
