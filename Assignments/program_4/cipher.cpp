@@ -45,10 +45,14 @@ public:
         int intVal;
         encodedMessage = decodedMessage;
         for(int i = 0; i < decodedMessage.size(); i++){
-            intVal = (int)encodedMessage[i] - 65;   // Turn it into an integer number between 0-25
-            intVal += shift % 26;                   // Shift the letter, using mod to wrap back around
-            encodedMessage[i] = intVal + 65;        // Turn integer back into an ascii upper case letter
-            
+            intVal = (int)encodedMessage[i];        // Turn it into an integer number between 0-25
+            if(intVal >= 65 && intVal <= 90){
+                intVal += shift;                    // Shift the value
+                if(intVal > 90){                    //if the value is too small to be a letter,
+                    intVal -= 26;                   //make it back into one
+                }
+                encodedMessage[i] = intVal;         // Turn integer back into ASCII upper letter
+            }
         }
     }
     //*************************************************************
@@ -61,11 +65,13 @@ public:
         int intVal;
         decodedMessage = encodedMessage;
         for(int i = 0; i < encodedMessage.size(); i++){
-            cout << decodedMessage << endl;
             intVal = (int)decodedMessage[i];        // Turn it into an integer number between 0-25
-            if(intVal > 65 && intVal < 90){
-                intVal -= shift % 26;                   // Shift the letter, using mod to wrap back around
-                decodedMessage[i] = intVal;             // Turn integer back into ASCII upper letter
+            if(intVal >= 65 && intVal <= 90){
+                intVal -= shift;                    // Shift the value
+                if(intVal < 65){                    //if the value is too small to be a letter,
+                    intVal += 26;                   //make it back into one
+                }
+                decodedMessage[i] = intVal;         // Turn integer back into ASCII upper letter
             }
         }
     }
@@ -130,11 +136,16 @@ public:
     // POSTCONDITION: stores the data for manipulation           *
     //************************************************************
     void ReadPlainText(ifstream& in){
+        int string_size = 8;
         int sh = 0;
         string mes = "";
-        in >> sh >> mes;            //read message and shift
+        char temp = ' ';            //program is being weird for getline
+        in >> sh >> temp;           //read shift
+        
+        getline(in, mes);
         SetShift(sh);
-        decodedMessage = mes;       //store them
+        decodedMessage = temp;
+        decodedMessage += mes;      //store them
     }
     //************************************************************
     // DESCRIPTION: writes plaintext to an output stream         *
@@ -168,13 +179,15 @@ int main(){
     outFile << "11/26/2019" << endl;
     outFile << "program_4 output" << endl << endl;
 
-    for(int f = 0; f < 1; f++){
+    //this is the basic requirement chunk for the program
+    for(int i = 0; i < numReads; i++){
         A.ReadCipherText(inFile);
-        
         A.Decrypt();
         A.WritePlainText(outFile);
     }
 
+    //this chunk is the part for extra credit, should just have to
+    //      uncomment this block and comment the above block to work.
     // for(int i = 0; i < numReads; i++){
     //     while(!Flag){
     //         cout << "1. Encrypt" << endl;
@@ -184,10 +197,17 @@ int main(){
     //         switch(choice){
     //             case '1':
     //                 //encrypt
+    //                 A.ReadPlainText(inFile);
+    //                 A.UpperCase();
+    //                 A.Encrypt();
+    //                 A.WriteCipherText(outFile);
     //                 Flag = true;
     //                 break;
     //             case '2':
     //                 //decrypt
+    //                 A.ReadCipherText(inFile);
+    //                 A.Decrypt();
+    //                 A.WritePlainText(outFile);
     //                 Flag = true;
     //                 break;
     //             default:
@@ -201,6 +221,5 @@ int main(){
     inFile.close();
     outFile.close();
 
-    cout << "End Code" << endl;
     return 0;
 }

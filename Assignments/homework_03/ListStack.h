@@ -39,6 +39,6 @@ public:
     ListStack();                    
 
     void Push(Animal *);          
-    Animal *Pop();                 
+    Animal* Pop();                 
     ostream& Print(ostream&);       
 };
