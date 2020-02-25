@@ -15,17 +15,18 @@ private:
 public:
     //empty constructor
     Deck(){
-        
+        top = NULL;
     }
 
     //destructor
     ~Deck(){
         
     }
-    //loaded constructor
-    Deck(int s, Card* d, int c = 52){
-        
-    }
+
+    //loaded constructor (unnecessary)
+    // Deck(int s, Card* d, int c = 52){
+    ///
+    // }
 
     //copy constructor
     Deck(const Deck& that){
